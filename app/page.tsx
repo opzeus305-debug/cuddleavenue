@@ -89,7 +89,6 @@ function ParticleField() {
 export default function Home() {
   const [programIndex, setProgramIndex] = useState(0);
   const [familyIndex, setFamilyIndex] = useState(0);
-  const [locationIndex, setLocationIndex] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
   const [loaded, setLoaded] = useState(false);
 
@@ -101,6 +100,12 @@ export default function Home() {
     const update = () => {
       const available = document.documentElement.scrollHeight - innerHeight;
       progress?.style.setProperty('transform', `scaleX(${available > 0 ? scrollY / available : 0})`);
+      document.querySelectorAll<HTMLElement>('.scroll-shift').forEach((element) => {
+        const bounds = element.getBoundingClientRect();
+        const distance = innerHeight / 2 - (bounds.top + bounds.height / 2);
+        const shift = Math.max(-12, Math.min(12, distance * .022));
+        element.style.setProperty('--scroll-shift', `${shift}px`);
+      });
     };
     addEventListener('scroll', update, { passive: true });
     update();
@@ -134,7 +139,6 @@ export default function Home() {
 
   const program = programs[programIndex];
   const family = familyDetails[familyIndex];
-  const location = locations[locationIndex];
 
   return (
     <main>
@@ -161,7 +165,7 @@ export default function Home() {
           <p className="hero-intro">A warm, academically purposeful Brooklyn academy where children are known closely and guided toward real independence.</p>
           <div className="hero-actions"><a className="button button-ink magnetic" href="#visit" onPointerMove={magnetMove} onPointerLeave={magnetLeave}>Visit the academy <span>↗</span></a><a className="quiet-link" href="#programs">Find a program <span>↓</span></a></div>
         </div>
-        <div className="hero-media depth-card" onPointerMove={depthMove} onPointerLeave={depthLeave}>
+        <div className="hero-media depth-card scroll-shift" onPointerMove={depthMove} onPointerLeave={depthLeave}>
           <img src="/assets/hero-classroom.webp" alt="An educator guiding toddlers in a Cuddle Avenue classroom" />
           <div className="image-note"><span>Inside the classroom</span><span>Weekdays · 7:30—6:00</span></div>
           <div className="hero-seal"><strong>5.0</strong><span>47 parent reviews</span></div>
@@ -169,11 +173,13 @@ export default function Home() {
         <div className="hero-facts"><div><strong>02</strong><span>Brooklyn locations</span></div><div><strong>6w—5y</strong><span>Continuity of care</span></div><div><strong>3-K</strong><span>Free NYC school day</span></div><div><strong>Fresh</strong><span>Meals made in-house</span></div></div>
       </section>
 
+      <div className="motion-rail" aria-label="Curriculum areas"><div><span>Practical life</span><i>↗</i><span>Language</span><i>↗</i><span>Mathematics</span><i>↗</i><span>Sensory work</span><i>↗</i><span>Art & movement</span><i>↗</i><span aria-hidden="true">Practical life</span><i aria-hidden="true">↗</i><span aria-hidden="true">Language</span><i aria-hidden="true">↗</i></div></div>
+
       <section className="approach section reveal" id="approach">
         <div className="container">
           <div className="section-heading"><p className="eyebrow">01 · Our approach</p><h2>Care that feels personal.<br /><span>Learning that has purpose.</span></h2><p>Parents should never have to choose between a child who is deeply cared for and one who is thoughtfully challenged.</p></div>
           <div className="principle-grid">
-            <article className="principle principle-feature"><span>01</span><h3>Known closely</h3><p>Responsive educators notice each child’s cues, interests and next steps.</p><img src="/assets/story-gardening.webp" alt="An educator and child gardening together" /></article>
+            <article className="principle principle-feature"><span>01</span><h3>Known closely</h3><p>Responsive educators notice each child’s cues, interests and next steps.</p><div className="depth-card scroll-shift" onPointerMove={depthMove} onPointerLeave={depthLeave}><img src="/assets/story-gardening.webp" alt="An educator and child gardening together" /></div></article>
             <article className="principle"><span>02</span><h3>Prepared thoughtfully</h3><p>Calm, ordered rooms invite choice, focus, movement and meaningful work.</p></article>
             <article className="principle"><span>03</span><h3>Trusted fully</h3><p>Licensing, safety routines and daily communication are visible—not fine print.</p><blockquote>“Families followed Ayna when she opened a place of her own.”</blockquote></article>
           </div>
@@ -185,7 +191,7 @@ export default function Home() {
           <div className="section-heading row"><div><p className="eyebrow">02 · Programs</p><h2>The right-sized world,<br /><span>at every stage.</span></h2></div><p>Select your child’s age to see how the pace, environment and learning evolve.</p></div>
           <div className="program-tabs" role="tablist" aria-label="Programs by age">{programs.map((item, index) => <button key={item.name} role="tab" aria-selected={programIndex === index} onClick={() => transition(() => setProgramIndex(index))}><span>0{index + 1}</span><strong>{item.name}</strong><small>{item.age}</small></button>)}</div>
           <div className="program-card" style={{ '--program-color': program.color } as React.CSSProperties}>
-            <div className="program-image depth-card" onPointerMove={depthMove} onPointerLeave={depthLeave}><img src={program.image} alt={`${program.name} program at Cuddle Avenue`} /><span>{program.age}</span></div>
+            <div className="program-image depth-card scroll-shift" onPointerMove={depthMove} onPointerLeave={depthLeave}><img src={program.image} alt={`${program.name} program at Cuddle Avenue`} /><span>{program.age}</span></div>
             <div className="program-copy"><p className="eyebrow">{program.name} program</p><h3>{program.title}</h3><p>{program.copy}</p><ul>{program.points.map((point) => <li key={point}>{point}</li>)}</ul><a className="button button-ink magnetic" href="#visit" onPointerMove={magnetMove} onPointerLeave={magnetLeave}>Ask about {program.name} <span>↗</span></a></div>
           </div>
           <p className="fine-print">NYC 3-K’s free school day is 8:40am—3:00pm; extended care is available for an additional fee. Summer details vary by season.</p>
@@ -201,9 +207,10 @@ export default function Home() {
 
       <section className="parents section reveal" id="parents">
         <div className="container">
-          <div className="section-heading row"><div><p className="eyebrow">03 · For parents</p><h2>The details that make<br /><span>a family day work.</span></h2></div><div className="detail-tabs" role="tablist">{familyDetails.map((item, index) => <button key={item.label} aria-selected={familyIndex === index} onClick={() => transition(() => setFamilyIndex(index))}><span>0{index + 1}</span>{item.label}</button>)}</div></div>
-          <div className="detail-card">
-            <div className="detail-image depth-card" onPointerMove={depthMove} onPointerLeave={depthLeave}><img src={family.image} alt={`${family.label} at Cuddle Avenue`} /></div>
+          <div className="section-heading row"><div><p className="eyebrow">03 · For parents</p><h2>The details that make<br /><span>a family day work.</span></h2></div><p>Choose what matters most right now. Every answer stays clear, specific and easy to compare.</p></div>
+          <div className="parent-workspace">
+            <div className="detail-tabs" role="tablist">{familyDetails.map((item, index) => <button key={item.label} aria-selected={familyIndex === index} onClick={() => transition(() => setFamilyIndex(index))}><span>0{index + 1}</span>{item.label}<i>↗</i></button>)}</div>
+            <div className="detail-image depth-card scroll-shift" onPointerMove={depthMove} onPointerLeave={depthLeave}><img src={family.image} alt={`${family.label} at Cuddle Avenue`} /></div>
             <div className="detail-copy"><p className="eyebrow">{family.kicker}</p><h3>{family.title}</h3><p>{family.copy}</p><div className="detail-facts">{family.facts.map((fact) => <span key={fact}>{fact}</span>)}</div></div>
           </div>
         </div>
@@ -218,8 +225,8 @@ export default function Home() {
 
       <section className="locations section reveal" id="locations">
         <div className="container">
-          <div className="section-heading row"><div><p className="eyebrow">04 · Locations</p><h2>Two Brooklyn doors.<br /><span>One close community.</span></h2></div><div className="location-tabs" role="tablist">{locations.map((item, index) => <button key={item.label} aria-selected={locationIndex === index} onClick={() => transition(() => setLocationIndex(index))}><span>0{index + 1}</span>{item.label}</button>)}</div></div>
-          <div className="location-card"><div className="location-image depth-card" onPointerMove={depthMove} onPointerLeave={depthLeave}><img src={location.image} alt={`${location.label} Cuddle Avenue location`} /></div><div className="location-copy"><p className="eyebrow">Brooklyn · NY</p><h3>{location.label}</h3><address>{location.address}</address><p>{location.note}</p><div><a className="button button-ink magnetic" href="#visit" onPointerMove={magnetMove} onPointerLeave={magnetLeave}>Tour this location <span>↗</span></a><a className="quiet-link" href={location.map} target="_blank" rel="noreferrer">Directions ↗</a></div></div></div>
+          <div className="section-heading row"><div><p className="eyebrow">04 · Locations</p><h2>Two Brooklyn doors.<br /><span>One close community.</span></h2></div><p>Compare both locations at a glance, then choose the one that fits your family’s daily rhythm.</p></div>
+          <div className="campus-grid">{locations.map((item, index) => <article className="campus-card" key={item.label}><div className="campus-image depth-card scroll-shift" onPointerMove={depthMove} onPointerLeave={depthLeave}><img src={item.image} alt={`${item.label} Cuddle Avenue location`} /><span>0{index + 1}</span></div><div className="campus-copy"><p className="eyebrow">Brooklyn · NY</p><h3>{item.label}</h3><address>{item.address}</address><p>{item.note}</p><div><a href="#visit">Schedule a tour ↗</a><a href={item.map} target="_blank" rel="noreferrer">Directions ↗</a></div></div></article>)}</div>
         </div>
       </section>
 
