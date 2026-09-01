@@ -187,10 +187,11 @@ p, h1, h2, h3, blockquote, figure { margin: 0; }
 .hero-facts span { max-width: 125px; text-align: right; }
 
 .motion-rail { padding: 14px 0; overflow: hidden; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--cream); }
-.motion-rail > div { width: max-content; display: flex; align-items: center; gap: 28px; animation: railMove 24s linear infinite; }
-.motion-rail span { font-size: 18px; font-weight: 500; letter-spacing: -.02em; }
-.motion-rail i { color: var(--clay); font-style: normal; }
-@keyframes railMove { to { transform: translateX(-38%); } }
+.motion-track { width: max-content; display: flex; align-items: center; animation: railMove 24s linear infinite; will-change: transform; }
+.motion-group { flex: none; display: flex; align-items: center; gap: 34px; padding-right: 34px; }
+.motion-group span { display: flex; align-items: center; gap: 34px; font-size: 18px; font-weight: 500; letter-spacing: -.02em; white-space: nowrap; }
+.motion-group i { color: var(--clay); font-style: normal; }
+@keyframes railMove { to { transform: translateX(-50%); } }
 
 .section { padding: var(--s7) 0; }
 .section-heading { margin-bottom: var(--s5); display: grid; grid-template-columns: minmax(0, 1fr) 390px; gap: var(--s6); align-items: end; }
