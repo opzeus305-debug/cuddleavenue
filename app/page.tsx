@@ -173,7 +173,7 @@ export default function Home() {
         <div className="hero-facts"><div><strong>02</strong><span>Brooklyn locations</span></div><div><strong>6w—5y</strong><span>Continuity of care</span></div><div><strong>3-K</strong><span>Free NYC school day</span></div><div><strong>Fresh</strong><span>Meals made in-house</span></div></div>
       </section>
 
-      <div className="motion-rail" aria-label="Curriculum areas"><div><span>Practical life</span><i>↗</i><span>Language</span><i>↗</i><span>Mathematics</span><i>↗</i><span>Sensory work</span><i>↗</i><span>Art & movement</span><i>↗</i><span aria-hidden="true">Practical life</span><i aria-hidden="true">↗</i><span aria-hidden="true">Language</span><i aria-hidden="true">↗</i></div></div>
+      <div className="motion-rail" aria-label="Curriculum areas"><div className="motion-track">{[0, 1].map((group) => <div className="motion-group" aria-hidden={group === 1} key={group}>{['Practical life', 'Language', 'Mathematics', 'Sensory work', 'Art & movement'].map((item) => <span key={item}>{item}<i>↗</i></span>)}</div>)}</div></div>
 
       <section className="approach section reveal" id="approach">
         <div className="container">
