@@ -36,3 +36,10 @@ next-env.d.ts
 /.wrangler/
 /outputs/
 /work/
+
+# Local Netlify folder
+.netlify
+
+# Local source-asset archives
+/Cuddle Avenue Website*.zip*
+/Cuddle Avenue Website*.fdmdownload
