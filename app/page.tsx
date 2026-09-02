@@ -28,8 +28,8 @@ function SpatialImage({ src, alt, className = '' }: { src: string; alt: string; 
     const bounds = event.currentTarget.getBoundingClientRect();
     const x = (event.clientX - bounds.left) / bounds.width - .5;
     const y = (event.clientY - bounds.top) / bounds.height - .5;
-    event.currentTarget.style.setProperty('--px', String(x * 12) + 'px');
-    event.currentTarget.style.setProperty('--py', String(y * 12) + 'px');
+    event.currentTarget.style.setProperty('--px', String(x * 5) + 'px');
+    event.currentTarget.style.setProperty('--py', String(y * 5) + 'px');
   };
   const leave = (event: React.PointerEvent<HTMLElement>) => {
     event.currentTarget.style.setProperty('--px', '0px');
@@ -107,9 +107,13 @@ export default function Home() {
     </header>
 
     <section className="hero" id="content">
-      <div className="hero-copy"><p>Early childhood education · Brooklyn</p><h1><span>A thoughtful beginning</span><em>lasts a lifetime.</em></h1><p>Care with the warmth of home. An academic foundation built through attention, independence and purposeful play.</p><div><a className="dark-button magnetic" href="#visit" onPointerMove={magnetMove} onPointerLeave={magnetLeave}>Schedule a tour <span>↗</span></a><button type="button" onClick={() => jumpToRoom(0)}>Enter the learning house <span>↓</span></button></div></div>
-      <SpatialImage className="hero-image" src="/assets/sami-classroom-hero.webp" alt="A warm Cuddle Avenue classroom with a central reading tree" />
-      <div className="hero-facts"><span><b>02</b> Brooklyn campuses</span><span><b>5.0</b> parent rating</span><span><b>3-K</b> free school day</span></div>
+      <div className="hero-kicker"><span>Early childhood education</span><span>Brooklyn · New York</span></div>
+      <div className="hero-copy">
+        <h1><span>A thoughtful beginning</span><em>lasts a lifetime.</em></h1>
+        <div className="hero-statement"><p>Care with the warmth of home. An academic foundation built through attention, independence and purposeful play.</p><div><a className="light-button magnetic" href="#visit" onPointerMove={magnetMove} onPointerLeave={magnetLeave}>Schedule a tour <span>↗</span></a><button type="button" onClick={() => jumpToRoom(0)}>Enter the learning house <span>↓</span></button></div></div>
+      </div>
+      <SpatialImage className="hero-image" src="/assets/hero-classroom.webp" alt="Children learning with an educator in a Cuddle Avenue classroom" />
+      <div className="hero-facts"><span><b>02</b><small>Brooklyn<br />campuses</small></span><span><b>5.0</b><small>Parent<br />rating</small></span><span><b>3-K</b><small>Free full<br />school day</small></span></div>
       <div className="hero-orbit" aria-hidden="true"><span /><span /><span /><i /></div>
     </section>
 
