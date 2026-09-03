@@ -112,33 +112,34 @@ export default function Home() {
           <a className="masthead__visit" href="#visit">Arrange a visit</a>
           <button className="heritage-menu-button" type="button" aria-expanded={menuOpen} aria-controls="navigation-atlas" onClick={() => setMenuOpen(true)}>Menu</button>
         </div>
-        <div className={`navigation-atlas ${menuOpen ? 'navigation-atlas--open' : ''}`} id="navigation-atlas" aria-hidden={!menuOpen}>
-          <span className="navigation-atlas__curtain navigation-atlas__curtain--brass" aria-hidden="true" />
-          <span className="navigation-atlas__curtain navigation-atlas__curtain--forest" aria-hidden="true" />
-          <div className="navigation-atlas__top">
-            <Brand />
-            <p>Explore Cuddle Avenue</p>
-            <button type="button" onClick={() => setMenuOpen(false)} aria-label="Close navigation">Close <span>×</span></button>
-          </div>
-          <nav aria-label="Expanded navigation">
-            {navigationItems.map((item, index) => (
-              <a href={item.href} key={item.href} onPointerEnter={() => setNavIndex(index)} onFocus={() => setNavIndex(index)} onClick={() => setMenuOpen(false)}>
-                <span>0{index + 1}</span><b>{item.label}</b><i>↗</i>
-              </a>
-            ))}
-          </nav>
-          <aside>
-            <ImageFrame key={navigationItems[navIndex].image} src={navigationItems[navIndex].image} alt="" />
-            <p>{navigationItems[navIndex].note}</p>
-          </aside>
-          <div className="navigation-atlas__footer">
-            <a href="#visit" onClick={() => setMenuOpen(false)}>Arrange a visit ↗</a>
-            <a href="mailto:customerservice@cuddleavenue.org">Email the school ↗</a>
-            <a href="tel:+19179605618">+1 (917) 960-5618</a>
-            <p>South Slope · Brooklyn, New York</p>
-          </div>
-        </div>
       </header>
+
+      <div className={`navigation-atlas ${menuOpen ? 'navigation-atlas--open' : ''}`} id="navigation-atlas" aria-hidden={!menuOpen}>
+        <span className="navigation-atlas__curtain navigation-atlas__curtain--brass" aria-hidden="true" />
+        <span className="navigation-atlas__curtain navigation-atlas__curtain--forest" aria-hidden="true" />
+        <div className="navigation-atlas__top">
+          <Brand />
+          <p>Explore Cuddle Avenue</p>
+          <button type="button" onClick={() => setMenuOpen(false)} aria-label="Close navigation">Close <span>×</span></button>
+        </div>
+        <nav aria-label="Expanded navigation">
+          {navigationItems.map((item, index) => (
+            <a href={item.href} key={item.href} onPointerEnter={() => setNavIndex(index)} onFocus={() => setNavIndex(index)} onClick={() => setMenuOpen(false)}>
+              <span>0{index + 1}</span><b>{item.label}</b><i>↗</i>
+            </a>
+          ))}
+        </nav>
+        <aside>
+          <ImageFrame key={navigationItems[navIndex].image} src={navigationItems[navIndex].image} alt="" />
+          <p>{navigationItems[navIndex].note}</p>
+        </aside>
+        <div className="navigation-atlas__footer">
+          <a href="#visit" onClick={() => setMenuOpen(false)}>Arrange a visit ↗</a>
+          <a href="mailto:customerservice@cuddleavenue.org">Email the school ↗</a>
+          <a href="tel:+19179605618">+1 (917) 960-5618</a>
+          <p>South Slope · Brooklyn, New York</p>
+        </div>
+      </div>
 
       <section className="heritage-hero" id="main-content">
         <div className="heritage-hero__visual">
